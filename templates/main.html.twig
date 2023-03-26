@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('build/images/logo/favicon.ico') }}" type="image/x-icon">
+    <title>BBO - {% block title %}{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+{#            {% include "_partials/_sidebar.html.twig" %}#}
+        </div>
+        <div id="main" class="layout-navbar">
+            <header class="mb-3">
+{#                {% include "_partials/_vertical-nav.html.twig" %}#}
+            </header>
+            <div id="main-content">
+                {% block body %}
+                {% endblock %}
+                <footer>
+                    <div class="footer clearfix mb-0 text-muted">
+                        <div class="float-start">
+                            <p>2021 &copy; Mazer</p>
+                        </div>
+                        <div class="float-end">
+                            <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
+                                    href="http://ahmadsaugi.com">A. Saugi</a></p>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    {% block javascript %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</body>
+
+</html>

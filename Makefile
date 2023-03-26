@@ -14,20 +14,26 @@ install:
 	$(DC) down
 	$(DC) up -d --remove-orphans --build
 	$(RUN-PHP) composer install
-	#$(RUN-NODE) sh -c "npm install && npm run build"
+	$(RUN-NODE) sh -c "npm install && npm run build"
 	$(MAKE) install-quality
 	$(MAKE) init-git-hook
+
 init-git-hook:	## Installe les git-hook
 	./tools/install/init-git-hook.sh
+
 install-quality:
 	$(RUN-PHP) composer install --working-dir=tools/psalm
 	$(RUN-PHP) composer install --working-dir=tools/php-cs-fixer
+
 npm-install:	## Lance un npm install
 	$(RUN-NODE) npm install
+
 npm-build:	## Lance un npm run build
 	$(RUN-NODE) npm run build
+
 npm-watch:	## Lance un npm run watch
 	$(RUN-NODE) npm run watch
+
 npm-install-build: npm-install npm-build	## Lance un npm-install suivi d'un npm-build
 
 ##Containers :

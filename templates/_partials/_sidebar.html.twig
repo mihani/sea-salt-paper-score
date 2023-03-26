@@ -1,0 +1,30 @@
+<div class="sidebar-wrapper active">
+    <div class="sidebar-header">
+        <div class="d-flex justify-content-between">
+            <div class="logo">
+                <a href="{{ path('auth_login') }}"><img src="{{ asset('build/images/logo/logo.png') }}" alt="BBO" srcset=""></a>
+            </div>
+            <div class="toggler">
+                <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar-menu">
+        <ul class="menu">
+            <li class="sidebar-title">Forms & Tables</li>
+            <li class="sidebar-item">
+                <a href="{{ path('app_chartjs') }}" class='sidebar-link'>
+                    <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                    <span>Charjs</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{{ path('app_paginator') }}" class='sidebar-link'>
+                    <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                    <span>Pagination</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+</div>

@@ -48,6 +48,8 @@ services:
     image: node:18
     container_name: ssps-node
     working_dir: /srv
+    environment:
+      NODE_ENV: dev
     volumes:
       - ./:/srv/
     command: echo "node service disabled" && /bin/true
