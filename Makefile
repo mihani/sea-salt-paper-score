@@ -13,13 +13,15 @@ install:
 	cp -n docker/data/history.dist docker/data/history
 	$(DC) down
 	$(DC) up -d --remove-orphans --build
-
 	$(RUN-PHP) composer install
 	#$(RUN-NODE) sh -c "npm install && npm run build"
+	$(MAKE) install-quality
 	$(MAKE) init-git-hook
-
 init-git-hook:	## Installe les git-hook
 	./tools/install/init-git-hook.sh
+install-quality:
+	$(RUN-PHP) composer install --working-dir=tools/psalm
+	$(RUN-PHP) composer install --working-dir=tools/php-cs-fixer
 npm-install:	## Lance un npm install
 	$(RUN-NODE) npm install
 npm-build:	## Lance un npm run build
@@ -39,7 +41,7 @@ php-root:	## Se connecte au container php en root
 all-quality: php-cs-fixer psalm	## Lance php-cs-fixer et psalm
 
 php-cs-fixer:	## Lance php-cs-fixer
-	$(RUN-PHP-NO-TTY) tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --verbose --show-progress=none --config=.php-cs-fixer.dist.php
+	$(RUN-PHP-NO-TTY) tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=php-cs-fixer-config.php --verbose --show-progress=none
 
 psalm:	## Lance psalm
 	$(RUN-PHP-NO-TTY) ./tools/psalm/psalm.phar --no-cache

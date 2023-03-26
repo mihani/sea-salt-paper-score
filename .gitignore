@@ -12,5 +12,6 @@ vendor/
 history
 docker.env.local
 docker.env.*.local
+docker-compose.local.yml
 vendor
 var
