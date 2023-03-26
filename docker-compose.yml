@@ -13,7 +13,6 @@ services:
     networks:
       - ssps
     volumes:
-      - db:/var/lib/mysql
       - ./docker/mysql:/etc/mysql/conf.d
 
   php:
