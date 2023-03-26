@@ -6,8 +6,4 @@ use App\Dto\Cards\AbstractCardWithQuantity;
 
 class CrabDuoCardDto extends AbstractCardWithQuantity
 {
-    public function __toString(): string
-    {
-        return 'Crabe';
-    }
 }

@@ -6,11 +6,15 @@ use App\Calculator\CardCalculator\CardCalculatorInterface;
 use App\Dto\PlayerHandDto;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
-readonly class PointCalculatorMediator
+class PointCalculatorMediator
 {
-    /** @param CardCalculatorInterface[] $calculators */
+    /**
+     * @psalm-suppress InvalidAttribute
+     *
+     * @param CardCalculatorInterface[] $calculators
+     */
     public function __construct(
-        #[TaggedIterator(CardCalculatorInterface::TAG_NAME)] private iterable $calculators
+        #[TaggedIterator(CardCalculatorInterface::TAG_NAME)] private readonly iterable $calculators
     ) {
     }
 

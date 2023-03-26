@@ -18,7 +18,7 @@ class PlayerHandDto
         private array $duoCards = [],
         private array $collectionCards = [],
         private array $cardsBoost = [],
-        private MermaidCardDto $mermaidCardDto = new MermaidCardDto()
+        private MermaidCardDto $mermaidCardDto = new MermaidCardDto(0, [])
     ) {
     }
 
@@ -42,7 +42,7 @@ class PlayerHandDto
         return $this->cardsBoost;
     }
 
-    public function getBoostedCards(string $className): ?CardWithQuantityDtoInterface
+    public function getBoostedCard(string $className): ?CardWithQuantityDtoInterface
     {
         foreach (array_merge($this->getCollectionCards(), $this->getDuoCards()) as $card) {
             if (!$card instanceof $className) {

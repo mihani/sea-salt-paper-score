@@ -4,7 +4,7 @@ namespace App\Calculator\CardCalculator;
 
 use App\Dto\PlayerHandDto;
 
-readonly class DuoCardCalculator implements CardCalculatorInterface
+class DuoCardCalculator implements CardCalculatorInterface
 {
     public function getPoints(PlayerHandDto $playerHandDto): int
     {

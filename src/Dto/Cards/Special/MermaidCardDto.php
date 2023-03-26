@@ -8,8 +8,10 @@ class MermaidCardDto extends AbstractCardWithQuantity
 {
     /** @param array<int, int> $quantityByColor (sous la forme <index, quantity>) */
     public function __construct(
+        int $quantity,
         private array $quantityByColor = []
     ) {
+        parent::__construct($quantity);
     }
 
     public function getQuantityByColor(): array
