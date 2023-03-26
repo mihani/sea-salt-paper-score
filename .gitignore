@@ -12,7 +12,7 @@ vendor/
 history
 docker.env.local
 docker.env.*.local
-docker-compose.local.yml
+docker-compose.override.yml
 vendor
 var
 

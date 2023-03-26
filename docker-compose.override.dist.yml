@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  nginx:
+    networks:
+      - hostmanager
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.{nginx}.rule=Host(`ssps.localhost`)"
+      - "traefik.http.routers.{nginx}.tls=true"
+
+networks:
+  hostmanager:
+    external: true
