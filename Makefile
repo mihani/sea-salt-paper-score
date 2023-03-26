@@ -1,12 +1,23 @@
 DC=docker compose
 EXEC=$(DC) exec
-EXEC-PHP-NO-TTY=$(EXEC) -T --user=1000 php
+RUN-PHP-NO-TTY=$(DC) run --rm -T php
 EXEC-PHP=$(EXEC) --user=1000 php
 EXEC-PHP-ROOT=$(EXEC) php
+RUN-PHP=$(DC) run --rm php
 RUN-NODE=$(DC) run --rm node
 
 ##Install :
-install: init-git-hook npm-install-build	## Installe le projet
+install:
+	cp -n .env .env.local
+	cp -n docker.env docker.env.local
+	cp -n docker/data/history.dist docker/data/history
+	$(DC) down
+	$(DC) up -d --remove-orphans --build
+
+	$(RUN-PHP) composer install
+	#$(RUN-NODE) sh -c "npm install && npm run build"
+	$(MAKE) init-git-hook
+
 init-git-hook:	## Installe les git-hook
 	./tools/install/init-git-hook.sh
 npm-install:	## Lance un npm install
@@ -28,10 +39,10 @@ php-root:	## Se connecte au container php en root
 all-quality: php-cs-fixer psalm	## Lance php-cs-fixer et psalm
 
 php-cs-fixer:	## Lance php-cs-fixer
-	$(EXEC-PHP-NO-TTY) tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --verbose --show-progress=none --config=.php-cs-fixer.dist.php
+	$(RUN-PHP-NO-TTY) tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --verbose --show-progress=none --config=.php-cs-fixer.dist.php
 
 psalm:	## Lance psalm
-	$(EXEC-PHP-NO-TTY) ./tools/psalm/psalm.phar --no-cache
+	$(RUN-PHP-NO-TTY) ./tools/psalm/psalm.phar --no-cache
 
 ##HELP
 help:                                                        ## show the help

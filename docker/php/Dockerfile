@@ -1,42 +1,39 @@
-FROM php:8.1-fpm
+FROM php:8.2-fpm-alpine
 
-ENV APCU_VERSION 5.1.19
-ENV COMPOSER_VERSION 2.4.3
+ARG APCU_VERSION=5.1.22
 
-RUN apt update &&  \
-    apt install -y ca-certificates  \
+RUN apk add --update --no-cache \
+    bash \
+    linux-headers \
+    ca-certificates \
     git \
+    oniguruma-dev \
     libxml2-dev \
     unzip \
-    zip \
-    libzip-dev \
-    libonig-dev  \
-    procps \
-    vim \
-    s6 && \
+    libzip-dev zlib-dev \
+    su-exec \
+    icu-dev \
+    vim && \
+    apk add --update --no-cache --virtual .build-deps \
+        $PHPIZE_DEPS && \
     pecl install apcu-${APCU_VERSION} && \
-    #TODO : Enable & configure xdebug
-#    pecl install xdebug && \
+    pecl install xdebug && \
     docker-php-ext-install intl zip mysqli pdo_mysql mbstring && \
-    #TODO : Enable & configure xdebug
-#    docker-php-ext-enable  xdebug && \
-    docker-php-ext-enable opcache apcu
-RUN apt auto-clean
-RUN addgroup bar
-RUN adduser --home /home foo --shell /bin/bash --disabled-password --ingroup bar --gecos ""
+    docker-php-ext-enable  xdebug && \
+    docker-php-ext-enable opcache apcu && \
+    apk del .build-deps && \
+    addgroup bar && \
+    adduser -D -h /home -s /bin/bash -G bar foo
 
-# S6 supervision overlay for docker ; Cf. https://skarnet.org/software/s6, https://github.com/just-containers/s6-overlay
-RUN curl -L https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-amd64.tar.gz | tar xz -C /
-
-# Composer
+ARG COMPOSER_VERSION=2.5.1
 RUN curl -sS https://getcomposer.org/installer \
         | php -- --filename=composer --install-dir=/usr/local/bin --version=${COMPOSER_VERSION}
 
-COPY config/php.ini /usr/local/etc/php/php.ini
-COPY config/xdebug.ini /usr/local/etc/php/conf.d/debug.ini
+COPY config/php.ini ${PHP_INI_DIR}/php.ini
+COPY config/xdebug.ini ${PHP_INI_DIR}/conf.d/xdebug.ini
 
-COPY rootfs /
+ADD entrypoint.sh /entrypoint
 
 WORKDIR /srv
 
-ENTRYPOINT ["/init"]
+ENTRYPOINT ["/entrypoint"]
