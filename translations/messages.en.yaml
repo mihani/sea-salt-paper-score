@@ -1,0 +1,8 @@
+template_info:
+  crafted_by: Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> <a href="http://ahmadsaugi.com">A. Saugi</a>
+app_name: Sea Salt Paper Score
+menu:
+  calculator: Calculator
+calculator:
+  calculate:
+    meta_title: Calculator

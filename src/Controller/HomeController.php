@@ -7,12 +7,12 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/calculator')]
-class CalculatorController extends AbstractController
+#[Route(path: '/')]
+class HomeController extends AbstractController
 {
-    #[Route(path: '/calculate', name: 'app_calculator_calculate')]
+    #[Route(name: 'app_index')]
     public function index()
     {
-        return $this->render('calculator/calculate.html.twig');
+        return $this->redirectToRoute('app_calculator_calculate');
     }
 }
