@@ -27,6 +27,8 @@ services:
     volumes:
       - ~/.composer:/home/.composer
       - ./docker/data/history:/home/.bash_history
+      - ./docker/php/config/bashrc:/home/.bashrc
+      - ./docker/php/config/bash_aliases:/home/.bash_aliases
       - ./:/srv/
 
   nginx:

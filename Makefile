@@ -32,7 +32,7 @@ npm-install-build: npm-install npm-build	## Lance un npm-install suivi d'un npm-
 
 ##Containers :
 php:		## Se connecte au container php
-	$(EXEC-PHP) bash
+	$(RUN-PHP) bash
 
 php-root:	## Se connecte au container php en root
 	$(EXEC-PHP-ROOT) bash
