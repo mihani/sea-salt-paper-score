@@ -18,8 +18,8 @@ class MermaidCardCalculator implements CardCalculatorInterface
         $quantityByColor = $mermaidCardDto->getQuantityByColor();
         arsort($quantityByColor);
 
-        return array_reduce(array_slice($quantityByColor, 0, $quantityOfMermaid), function (int $sum, int $count) {
-            return $sum + $count;
-        }, 0);
+        $highestColorSuits = array_slice($quantityByColor, 0, $quantityOfMermaid);
+
+        return (int) array_sum($highestColorSuits);
     }
 }
