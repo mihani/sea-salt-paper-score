@@ -52,6 +52,9 @@ php-cs-fixer:	## Lance php-cs-fixer
 psalm:	## Lance psalm
 	$(RUN-PHP-NO-TTY) ./tools/psalm/psalm.phar --no-cache
 
+phpunit:
+	$(RUN-PHP-NO-TTY) ./vendor/bin/phpunit
+
 ##HELP
 help:                                                        ## show the help
 	@grep -E '(^[0-9a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
