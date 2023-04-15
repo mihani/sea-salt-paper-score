@@ -2,18 +2,20 @@
 
 namespace App\Calculator\CardCalculator;
 
+use App\Dto\Calculator\CalculatorResult;
+use App\Dto\Calculator\DetailedPoint;
 use App\Dto\PlayerHandDto;
 
 class CollectionCardCalculator implements CardCalculatorInterface
 {
-    public function getPoints(PlayerHandDto $playerHandDto): int
+    public function getPoints(PlayerHandDto $playerHandDto): CalculatorResult
     {
-        $points = 0;
+        $result = new CalculatorResult();
 
         foreach ($playerHandDto->getCollectionCards() as $collectionCard) {
-            $points += $collectionCard->getPoints();
+            $result->addResult(new DetailedPoint(get_class($collectionCard), $collectionCard->getPoints()));
         }
 
-        return $points;
+        return $result;
     }
 }

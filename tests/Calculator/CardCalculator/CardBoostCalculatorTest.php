@@ -20,7 +20,7 @@ class CardBoostCalculatorTest extends WebTestCase
 
         $cardBoostCalculator = $this->getContainer()->get(CardBoostCalculator::class);
 
-        static::assertEquals(0, $cardBoostCalculator->getPoints($playerHand));
+        static::assertEquals(0, $cardBoostCalculator->getPoints($playerHand)->getPoints());
     }
 
     public function testWithBoostButWithoutBoostedCard(): void
@@ -31,11 +31,11 @@ class CardBoostCalculatorTest extends WebTestCase
 
         $cardBoostCalculator = $this->getContainer()->get(CardBoostCalculator::class);
 
-        static::assertEquals(0, $cardBoostCalculator->getPoints($playerHand));
+        static::assertEquals(0, $cardBoostCalculator->getPoints($playerHand)->getPoints());
 
         $playerHand = new PlayerHandDto([new ShipDuoCardDto(2)], [new MarineCollectionCardDto(2)], [new PenguinCardBoostDto()]);
 
-        static::assertEquals(0, $cardBoostCalculator->getPoints($playerHand));
+        static::assertEquals(0, $cardBoostCalculator->getPoints($playerHand)->getPoints());
     }
 
     public function testWithoutBoostButWithBoostedCard(): void
@@ -46,7 +46,7 @@ class CardBoostCalculatorTest extends WebTestCase
 
         $cardBoostCalculator = $this->getContainer()->get(CardBoostCalculator::class);
 
-        static::assertEquals(0, $cardBoostCalculator->getPoints($playerHand));
+        static::assertEquals(0, $cardBoostCalculator->getPoints($playerHand)->getPoints());
     }
 
     public function testWithBoostAndBoostedCard(): void
@@ -57,6 +57,6 @@ class CardBoostCalculatorTest extends WebTestCase
 
         $cardBoostCalculator = $this->getContainer()->get(CardBoostCalculator::class);
 
-        static::assertEquals(6, $cardBoostCalculator->getPoints($playerHand));
+        static::assertEquals(6, $cardBoostCalculator->getPoints($playerHand)->getPoints());
     }
 }
