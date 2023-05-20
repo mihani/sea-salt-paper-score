@@ -2,18 +2,20 @@
 
 namespace App\Calculator\CardCalculator;
 
+use App\Dto\Calculator\CalculatorResult;
+use App\Dto\Calculator\DetailedPoint;
 use App\Dto\PlayerHandDto;
 
 class DuoCardCalculator implements CardCalculatorInterface
 {
-    public function getPoints(PlayerHandDto $playerHandDto): int
+    public function getPoints(PlayerHandDto $playerHandDto): CalculatorResult
     {
-        $points = 0;
+        $result = new CalculatorResult();
 
         foreach ($playerHandDto->getDuoCards() as $duoCard) {
-            $points += (int) ($duoCard->getQuantity() / 2);
+            $result->addResult(new DetailedPoint(get_class($duoCard), (int) ($duoCard->getQuantity() / 2)));
         }
 
-        return $points;
+        return $result;
     }
 }

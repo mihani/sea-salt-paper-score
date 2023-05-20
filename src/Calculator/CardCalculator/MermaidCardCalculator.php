@@ -2,17 +2,22 @@
 
 namespace App\Calculator\CardCalculator;
 
+use App\Dto\Calculator\CalculatorResult;
+use App\Dto\Calculator\DetailedPoint;
+use App\Dto\Cards\Special\MermaidCardDto;
 use App\Dto\PlayerHandDto;
 
 class MermaidCardCalculator implements CardCalculatorInterface
 {
-    public function getPoints(PlayerHandDto $playerHandDto): int
+    public function getPoints(PlayerHandDto $playerHandDto): CalculatorResult
     {
+        $result = new CalculatorResult();
+
         $mermaidCardDto = $playerHandDto->getMermaidCardDto();
         $quantityOfMermaid = $mermaidCardDto->getQuantity();
 
         if (0 === $quantityOfMermaid) {
-            return 0;
+            return $result;
         }
 
         $quantityByColor = $mermaidCardDto->getQuantityByColor();
@@ -20,6 +25,10 @@ class MermaidCardCalculator implements CardCalculatorInterface
 
         $highestColorSuits = array_slice($quantityByColor, 0, $quantityOfMermaid);
 
-        return (int) array_sum($highestColorSuits);
+        foreach ($highestColorSuits as $index => $highestColorSuit) {
+            $result->addResult(new DetailedPoint(MermaidCardDto::class.'-'.$index, $highestColorSuit));
+        }
+
+        return $result;
     }
 }
