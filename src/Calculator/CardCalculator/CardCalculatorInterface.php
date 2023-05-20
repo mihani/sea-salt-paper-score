@@ -12,4 +12,6 @@ interface CardCalculatorInterface
     public const TAG_NAME = 'app.point_calculator';
 
     public function getPoints(PlayerHandDto $playerHandDto): CalculatorResult;
+
+    public function getType(): string;
 }

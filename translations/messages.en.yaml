@@ -6,3 +6,31 @@ menu:
 calculator:
   calculate:
     meta_title: Calculator
+card:
+  duo:
+    crab: Crab
+    fish: Fish
+    shark: Shark
+    ship: Ship
+  collection:
+    octopus: Octopus
+    penguin: Penguin
+    sailor: Sailor
+    shell: Shell
+  boost:
+    captain: Captain
+    penguin_colony: Penguin Colony
+    lighthouse: Lighthouse
+    shoal_of_fish: Shoal of Fish
+  color:
+    dark_blue: Dark Blue
+    light_blue: Light Blue
+    black: Black
+    yellow: Yellow
+    light_green: Light Green
+    white: White
+    purple: Purple
+    light_grey: Light Grey
+    light_orange: Light Orange
+    light_pink: Light Pink
+    orange: Orange

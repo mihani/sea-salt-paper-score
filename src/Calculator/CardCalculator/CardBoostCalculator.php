@@ -2,8 +2,9 @@
 
 namespace App\Calculator\CardCalculator;
 
+use App\Config\BoostCard;
 use App\Dto\Calculator\CalculatorResult;
-use App\Dto\Calculator\DetailedPoint;
+use App\Dto\Calculator\EmbedDetailedPoint;
 use App\Dto\PlayerHandDto;
 
 class CardBoostCalculator implements CardCalculatorInterface
@@ -12,14 +13,21 @@ class CardBoostCalculator implements CardCalculatorInterface
     {
         $result = new CalculatorResult();
 
-        foreach ($playerHandDto->getCardsBoost() as $cardBoost) {
-            if (!($boostedCard = $playerHandDto->getBoostedCard($cardBoost->getBoostedCardClassName()))) {
+        foreach ($playerHandDto->getBoostCards() as $cardBoost) {
+            /** @var BoostCard $boostCardEnum */
+            $boostCardEnum = $cardBoost->type;
+            if (!($boostedCard = $playerHandDto->getBoostedCard($boostCardEnum))) {
                 continue;
             }
 
-            $result->addResult(new DetailedPoint(get_class($cardBoost), $boostedCard->getQuantity() * $cardBoost->getPointByQuantity()));
+            $result->addResult(new EmbedDetailedPoint($boostCardEnum::class, $boostedCard->quantity * $boostCardEnum->point()));
         }
 
         return $result;
+    }
+
+    public function getType(): string
+    {
+        return BoostCard::class;
     }
 }

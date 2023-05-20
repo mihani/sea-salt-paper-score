@@ -3,6 +3,7 @@ services:
   nginx:
     networks:
       - hostmanager
+      - ssps
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.{nginx}.rule=Host(`ssps.localhost`)"

@@ -2,8 +2,9 @@
 
 namespace App\Calculator\CardCalculator;
 
+use App\Config\DuoCard;
 use App\Dto\Calculator\CalculatorResult;
-use App\Dto\Calculator\DetailedPoint;
+use App\Dto\Calculator\EmbedDetailedPoint;
 use App\Dto\PlayerHandDto;
 
 class DuoCardCalculator implements CardCalculatorInterface
@@ -13,9 +14,17 @@ class DuoCardCalculator implements CardCalculatorInterface
         $result = new CalculatorResult();
 
         foreach ($playerHandDto->getDuoCards() as $duoCard) {
-            $result->addResult(new DetailedPoint(get_class($duoCard), (int) ($duoCard->getQuantity() / 2)));
+            /** @var DuoCard $duoCardEnum */
+            $duoCardEnum = $duoCard->type;
+
+            $result->addResult(new EmbedDetailedPoint($duoCardEnum::class, (int) ($duoCard->quantity / 2)));
         }
 
         return $result;
+    }
+
+    public function getType(): string
+    {
+        return DuoCard::class;
     }
 }

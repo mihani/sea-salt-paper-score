@@ -2,9 +2,10 @@
 
 namespace App\Calculator\CardCalculator;
 
+use App\Config\SpecialCard;
 use App\Dto\Calculator\CalculatorResult;
-use App\Dto\Calculator\DetailedPoint;
-use App\Dto\Cards\Special\MermaidCardDto;
+use App\Dto\Calculator\EmbedDetailedPoint;
+use App\Dto\Cards\MermaidCardDto;
 use App\Dto\PlayerHandDto;
 
 class MermaidCardCalculator implements CardCalculatorInterface
@@ -13,22 +14,22 @@ class MermaidCardCalculator implements CardCalculatorInterface
     {
         $result = new CalculatorResult();
 
-        $mermaidCardDto = $playerHandDto->getMermaidCardDto();
-        $quantityOfMermaid = $mermaidCardDto->getQuantity();
+        $mermaidCardDtos = $playerHandDto->getMermaidCards();
+        $quantityOfMermaid = count($mermaidCardDtos);
 
         if (0 === $quantityOfMermaid) {
             return $result;
         }
 
-        $quantityByColor = $mermaidCardDto->getQuantityByColor();
-        arsort($quantityByColor);
-
-        $highestColorSuits = array_slice($quantityByColor, 0, $quantityOfMermaid);
-
-        foreach ($highestColorSuits as $index => $highestColorSuit) {
-            $result->addResult(new DetailedPoint(MermaidCardDto::class.'-'.$index, $highestColorSuit));
+        foreach ($mermaidCardDtos as $mermaidCardDto) {
+            $result->addResult(new EmbedDetailedPoint(MermaidCardDto::class, $mermaidCardDto->quantity));
         }
 
         return $result;
+    }
+
+    public function getType(): string
+    {
+        return SpecialCard::class;
     }
 }

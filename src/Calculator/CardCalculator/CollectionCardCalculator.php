@@ -2,8 +2,9 @@
 
 namespace App\Calculator\CardCalculator;
 
+use App\Config\CollectionCard;
 use App\Dto\Calculator\CalculatorResult;
-use App\Dto\Calculator\DetailedPoint;
+use App\Dto\Calculator\EmbedDetailedPoint;
 use App\Dto\PlayerHandDto;
 
 class CollectionCardCalculator implements CardCalculatorInterface
@@ -13,9 +14,17 @@ class CollectionCardCalculator implements CardCalculatorInterface
         $result = new CalculatorResult();
 
         foreach ($playerHandDto->getCollectionCards() as $collectionCard) {
-            $result->addResult(new DetailedPoint(get_class($collectionCard), $collectionCard->getPoints()));
+            /** @var CollectionCard $collectionCardEnum */
+            $collectionCardEnum = $collectionCard->type;
+
+            $result->addResult(new EmbedDetailedPoint($collectionCardEnum::class, $collectionCard->quantity));
         }
 
         return $result;
+    }
+
+    public function getType(): string
+    {
+        return CollectionCard::class;
     }
 }

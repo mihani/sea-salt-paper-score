@@ -52,6 +52,8 @@ services:
       NODE_ENV: dev
     volumes:
       - ./:/srv/
+    networks:
+      - ssps
     command: echo "node service disabled" && /bin/true
 
 networks:

@@ -4,7 +4,7 @@ namespace App\Calculator;
 
 use App\Calculator\CardCalculator\CardCalculatorInterface;
 use App\Dto\Calculator\CalculatorResult;
-use App\Dto\Calculator\EmbedDetailedPoint;
+use App\Dto\Calculator\DetailedPoint;
 use App\Dto\PlayerHandDto;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
@@ -25,7 +25,7 @@ class PointCalculatorMediator
         $result = new CalculatorResult();
 
         foreach ($this->calculators as $calculator) {
-            $result->addResult(new EmbedDetailedPoint(get_class($calculator), $calculator->getPoints($playerHandDto)));
+            $result->addResult(new DetailedPoint($calculator->getType(), $calculator->getPoints($playerHandDto)));
         }
 
         return $result;

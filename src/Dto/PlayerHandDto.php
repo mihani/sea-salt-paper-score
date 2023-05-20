@@ -2,23 +2,25 @@
 
 namespace App\Dto;
 
-use App\Dto\Cards\CardBoost\CardBoostDtoInterface;
-use App\Dto\Cards\CardWithQuantityDtoInterface;
-use App\Dto\Cards\Collection\CollectionCardDtoInterface;
-use App\Dto\Cards\Special\MermaidCardDto;
+use App\Config\BoostCard;
+use App\Dto\Cards\BoostCardDto;
+use App\Dto\Cards\CollectionCardDto;
+use App\Dto\Cards\DuoCardDto;
+use App\Dto\Cards\MermaidCardDto;
 
 class PlayerHandDto
 {
     /**
-     * @param CardWithQuantityDtoInterface[] $duoCards
-     * @param CollectionCardDtoInterface[]   $collectionCards
-     * @param CardBoostDtoInterface[]        $cardsBoost
+     * @param DuoCardDto[]        $duoCards
+     * @param CollectionCardDto[] $collectionCards
+     * @param BoostCardDto[]      $boostCards
+     * @param MermaidCardDto[]    $mermaidCards
      */
     public function __construct(
         private array $duoCards = [],
         private array $collectionCards = [],
-        private array $cardsBoost = [],
-        private MermaidCardDto $mermaidCardDto = new MermaidCardDto(0, [])
+        private array $boostCards = [],
+        private array $mermaidCards = []
     ) {
     }
 
@@ -27,25 +29,53 @@ class PlayerHandDto
         return $this->duoCards;
     }
 
+    public function setDuoCards(array $duoCards): self
+    {
+        $this->duoCards = $duoCards;
+
+        return $this;
+    }
+
     public function getCollectionCards(): array
     {
         return $this->collectionCards;
     }
 
-    public function getMermaidCardDto(): MermaidCardDto
+    public function setCollectionCards(array $collectionCards): self
     {
-        return $this->mermaidCardDto;
+        $this->collectionCards = $collectionCards;
+
+        return $this;
     }
 
-    public function getCardsBoost(): array
+    public function getMermaidCards(): array
     {
-        return $this->cardsBoost;
+        return $this->mermaidCards;
     }
 
-    public function getBoostedCard(string $className): ?CardWithQuantityDtoInterface
+    public function setMermaidCards(array $mermaidCards): self
+    {
+        $this->mermaidCards = $mermaidCards;
+
+        return $this;
+    }
+
+    public function getBoostCards(): array
+    {
+        return $this->boostCards;
+    }
+
+    public function setBoostCards(array $boostCards): self
+    {
+        $this->boostCards = $boostCards;
+
+        return $this;
+    }
+
+    public function getBoostedCard(BoostCard $boostCard): CollectionCardDto|DuoCardDto|null
     {
         foreach (array_merge($this->getCollectionCards(), $this->getDuoCards()) as $card) {
-            if (!$card instanceof $className) {
+            if ($card->type->getBooster() !== $boostCard) {
                 continue;
             }
 

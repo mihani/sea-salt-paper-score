@@ -1,0 +1,115 @@
+<div {{ attributes }}>
+    {{ form_start(form, {attr: {class: 'form form-horizontal'}} ) }}
+        <div class="form-body">
+            <div class="row my-1">
+                <div class="col">
+                    {{ form_label(form.duoCards) }}
+                </div>
+            </div>
+            <div class="row my-1">
+                <div class="col-md-4">Type</div>
+                <div class="col">Quantity</div>
+            </div>
+            <div class="row">
+                {% for key, duoCard in form.duoCards %}
+                    <div class="col-md-4 form-group">
+                        {{ form_widget(duoCard.type, { attr: { class: 'form-select'}}) }}
+                    </div>
+                    <div class="col-md-3 form-group">
+                        {{ form_widget(duoCard.quantity, { attr: { class: 'form-control'}}) }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ form_row(duoCard.vars.button_delete, { label: 'X', attr: { class: 'btn btn-outline-danger' } }) }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_widget(form.duoCards.vars.button_add, { label: '+ Add Item', attr: { class: 'btn btn-outline-primary' } }) }}
+                </div>
+            </div>
+            <br>
+
+            <div class="row my-1">
+                <div class="col">
+                    {{ form_label(form.collectionCards) }}
+                </div>
+            </div>
+            <div class="row my-1">
+                <div class="col-md-4">Type</div>
+                <div class="col">Quantity</div>
+            </div>
+            <div class="row">
+                {% for key, collectionCard in form.collectionCards %}
+                    <div class="col-md-4 form-group">
+                        {{ form_widget(collectionCard.type, { attr: { class: 'form-select'}}) }}
+                    </div>
+                    <div class="col-md-3 form-group">
+                        {{ form_widget(collectionCard.quantity, { attr: { class: 'form-control'}}) }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ form_row(collectionCard.vars.button_delete, { label: 'X', attr: { class: 'btn btn-outline-danger' } }) }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_widget(form.collectionCards.vars.button_add, { label: '+ Add Item', attr: { class: 'btn btn-outline-primary' } }) }}
+                </div>
+            </div>
+            <br>
+
+            <div class="row my-1">
+                <div class="col">
+                    {{ form_label(form.boostCards) }}
+                </div>
+            </div>
+            <div class="row">
+                {% for key, boostCard in form.boostCards %}
+                    <div class="col-md-4 form-group">
+                        {{ form_widget(boostCard.type, { attr: { class: 'form-select'}}) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form_row(boostCard.vars.button_delete, { label: 'X', attr: { class: 'btn btn-outline-danger' } }) }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_widget(form.boostCards.vars.button_add, { label: '+ Add Item', attr: { class: 'btn btn-outline-primary' } }) }}
+                </div>
+            </div>
+            <br>
+
+            <div class="row my-1">
+                <div class="col">
+                    {{ form_label(form.mermaidCards) }}
+                </div>
+            </div>
+            <div class="row my-1">
+                <div class="col-4">Color</div>
+            </div>
+            {% for key, mermaid in form.mermaidCards %}
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    {{ form_widget(mermaid.quantity, { attr: { class: 'form-control'}}) }}
+                </div>
+                <div class="col-md-2">
+                    {{ form_row(mermaid.vars.button_delete, { label: 'X', attr: { class: 'btn btn-outline-danger' } }) }}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="row">
+                <div class="col">
+                    {{ form_widget(form.mermaidCards.vars.button_add, { label: '+ Add Item', attr: { class: 'btn btn-outline-primary' } }) }}
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <button type="submit" class="btn btn-success" formnovalidate>Save</button>
+            </div>
+        </div>
+    {{ form_end(form, {'render_rest': false}) }}
+</div>
+

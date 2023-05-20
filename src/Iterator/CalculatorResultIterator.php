@@ -2,9 +2,12 @@
 
 namespace App\Iterator;
 
+use App\Dto\Calculator\DetailedPoint;
 use App\Dto\Calculator\DetailedPointInterface;
-use App\Dto\Calculator\EmbedDetailedPoint;
 
+/**
+ * @template-implements \RecursiveIterator<int, CalculatorResultIterator>
+ */
 class CalculatorResultIterator implements \RecursiveIterator
 {
     private int $position = 0;
@@ -43,7 +46,7 @@ class CalculatorResultIterator implements \RecursiveIterator
     {
         $detailPoints = $this->detailedPoints[$this->position];
 
-        return $detailPoints instanceof EmbedDetailedPoint && !empty($detailPoints->getDetailedPoints());
+        return $detailPoints instanceof DetailedPoint && !empty($detailPoints->getDetailedPoints());
     }
 
     public function getChildren(): self

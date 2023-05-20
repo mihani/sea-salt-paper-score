@@ -4,6 +4,9 @@ namespace App\Dto\Calculator;
 
 use App\Iterator\CalculatorResultIterator;
 
+/**
+ * @template-implements \IteratorAggregate<CalculatorResult>
+ */
 class CalculatorResult implements \IteratorAggregate
 {
     private int $points = 0;

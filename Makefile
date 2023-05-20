@@ -11,19 +11,22 @@ install:
 	cp -n .env .env.local
 	cp -n docker.env docker.env.local
 	cp -n docker/data/history.dist docker/data/history
+
+	$(MAKE) --no-print-directory reset
+	$(MAKE) --no-print-directory install-quality
+	$(MAKE) --no-print-directory init-git-hook
+
+reset:
 	$(DC) down
 	$(DC) up -d --remove-orphans --build
 	$(RUN-PHP) composer install
 	$(RUN-NODE) sh -c "npm install && npm run build"
-	$(MAKE) install-quality
-	$(MAKE) init-git-hook
 
 init-git-hook:	## Installe les git-hook
 	./tools/install/init-git-hook.sh
 
-install-quality:
-	$(RUN-PHP) composer install --working-dir=tools/psalm
-	$(RUN-PHP) composer install --working-dir=tools/php-cs-fixer
+install-quality: ## Install quality tools
+	$(RUN-PHP) composer install --working-dir=tools
 
 npm-install:	## Lance un npm install
 	$(RUN-NODE) npm install
@@ -47,13 +50,16 @@ php-root:	## Se connecte au container php en root
 all-quality: php-cs-fixer psalm	## Lance php-cs-fixer et psalm
 
 php-cs-fixer:	## Lance php-cs-fixer
-	$(RUN-PHP-NO-TTY) tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=php-cs-fixer-config.php --verbose --show-progress=none
+	$(RUN-PHP-NO-TTY) ./tools/vendor/bin/php-cs-fixer fix --config=php-cs-fixer-config.php --verbose --show-progress=none
 
 psalm:	## Lance psalm
-	$(RUN-PHP-NO-TTY) ./tools/psalm/psalm.phar --no-cache
+	$(RUN-PHP-NO-TTY) ./tools/vendor/bin/psalm --no-cache --show-info=true
 
-phpunit:
-	$(RUN-PHP-NO-TTY) ./vendor/bin/phpunit
+phpstan:	## Lance psalm
+	$(RUN-PHP-NO-TTY) ./tools/vendor/bin/phpstan --memory-limit=1G --configuration=phpstan.neon.dist
+
+phpunit: ## Run phpunit
+	$(RUN-PHP) ./vendor/bin/phpunit
 
 ##HELP
 help:                                                        ## show the help

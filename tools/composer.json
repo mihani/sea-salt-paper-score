@@ -1,0 +1,10 @@
+{
+    "name": "ssps/tools",
+    "type": "project",
+    "require": {
+        "vimeo/psalm": "^5.11",
+        "friendsofphp/php-cs-fixer": "^3.16",
+        "phpstan/phpstan": "^1.10"
+    },
+    "license": "MIT"
+}

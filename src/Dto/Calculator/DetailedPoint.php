@@ -2,21 +2,26 @@
 
 namespace App\Dto\Calculator;
 
-class DetailedPoint implements DetailedPointInterface
+readonly class DetailedPoint implements DetailedPointInterface
 {
     public function __construct(
-        private readonly string $cardType,
-        private readonly int $points = 0
+        private string $type,
+        private CalculatorResult $calculatorResult
     ) {
-    }
-
-    public function getCardType(): string
-    {
-        return $this->cardType;
     }
 
     public function getPoints(): int
     {
-        return $this->points;
+        return $this->calculatorResult->getPoints();
+    }
+
+    public function getCardType(): string
+    {
+        return $this->type;
+    }
+
+    public function getDetailedPoints(): array
+    {
+        return $this->calculatorResult->getDetailedPoints();
     }
 }

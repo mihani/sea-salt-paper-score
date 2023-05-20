@@ -18,11 +18,14 @@
         </div>
         <div id="main" class="layout-navbar">
             <header class="mb-3">
-{#                {% include "_partials/_vertical-nav.html.twig" %}#}
+{#                {% include "_partials/_vertical_nav.html.twig" %}#}
             </header>
             <div id="main-content">
+                {% include '_partials/_flash_messages.html.twig' %}
+
                 {% block body %}
                 {% endblock %}
+
                 <footer>
                     <div class="footer clearfix mb-0 text-muted">
                         <div class="float-start">
